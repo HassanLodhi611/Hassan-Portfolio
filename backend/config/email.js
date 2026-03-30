@@ -6,12 +6,22 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionUrl: `smtps://${process.env.EMAIL_USER}:${process.env.EMAIL_PASS}@smtp.gmail.com`,
+  connectionTimeout: 10000,
+  socketTimeout: 10000,
+  pool: {
+    maxConnections: 1,
+    maxMessages: 5,
+    rateDelta: 2000,
+    rateLimit: 5,
+  },
 });
 
+// Non-blocking email sending (fire-and-forget)
 const sendContactEmail = async (name, email, subject, message) => {
-  try {
-    // Email to admin (you)
-    await transporter.sendMail({
+  // Send both emails asynchronously without waiting
+  Promise.all([
+    transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission from ${name}: ${subject || 'No Subject'}`,
@@ -31,10 +41,9 @@ const sendContactEmail = async (name, email, subject, message) => {
           </p>
         </div>
       `,
-    });
-
-    // Confirmation email to user
-    await transporter.sendMail({
+      timeout: 10000,
+    }),
+    transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Message Received - Hassan Lodhi',
@@ -54,13 +63,15 @@ const sendContactEmail = async (name, email, subject, message) => {
           </p>
         </div>
       `,
-    });
+      timeout: 10000,
+    }),
+  ]).catch((err) => {
+    console.error('Background email sending failed:', err.message);
+    // Silently fail - message was already saved to DB
+  });
 
-    return true;
-  } catch (err) {
-    console.error('Email sending failed:', err);
-    throw err;
-  }
+  // Return immediately - don't wait for emails
+  return true;
 };
 
 module.exports = { sendContactEmail };

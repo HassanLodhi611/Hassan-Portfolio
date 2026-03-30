@@ -17,14 +17,10 @@ const sendMessage = async (req, res) => {
 
     const msg = await Message.create({ name, email, subject, message });
 
-    // Send email notifications
-    try {
-      await sendContactEmail(name, email, subject, message);
-    } catch (emailErr) {
-      console.error('Email sending error:', emailErr.message);
-      // Don't fail the API response if email fails, but log it
-    }
+    // Send email notifications in the background (don't wait)
+    sendContactEmail(name, email, subject, message);
 
+    // Return response immediately
     res.status(201).json({ success: true, message: 'Message sent successfully!', data: msg });
   } catch (err) {
     console.error('sendMessage error:', err);
