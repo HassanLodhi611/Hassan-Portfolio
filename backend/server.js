@@ -23,22 +23,22 @@ app.use(helmet());
 //   origin: process.env.CLIENT_URL || 'http://localhost:5173',
 //   credentials: true,
 // }));
-const allowedOrigins = [
-  "http://localhost:5173",
-  (process.env.CLIENT_URL || "").trim()
-];
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   (process.env.CLIENT_URL || "").trim()
+// ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(null, false);
-    }
-  },
-  credentials: true,
-}));
-
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(null, false);
+//     }
+//   },
+//   credentials: true,
+// }));
+app.use(cors());
 // ─── Rate limiting ────────────────────────────────
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
