@@ -1,0 +1,170 @@
+/* ─── SECTION ─── */
+.skills {
+  background: var(--bg);
+}
+
+/* ─── GRID ─── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+/* ─── SKILL CARD ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top accent line — hidden until hover */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--mint));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover {
+  border-color: var(--card-accent, var(--mint));
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* ─── ACCENT COLOR VARIANTS ─── */
+.card[data-cat="mint"]   { --card-accent: var(--mint); }
+.card[data-cat="gold"]   { --card-accent: var(--gold); }
+.card[data-cat="red"]    { --card-accent: var(--red); }
+.card[data-cat="purple"] { --card-accent: #a855f7; }
+
+/* ─── ICON ─── */
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* ─── CARD TITLE ─── */
+.cardTitle {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0;
+}
+
+/* ─── ACCENT TEXT COLORS ─── */
+.mint   { color: var(--mint); }
+.gold   { color: var(--gold); }
+.red    { color: var(--red); }
+.purple { color: #a855f7; }
+
+/* ─── TAGS/PILLS ─── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: border-color 0.2s, color 0.2s;
+  text-transform: none;
+}
+
+.card:hover .tag {
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+/* ─── PROGRESS BARS ─── */
+.bars {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.barLabel {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  color: var(--text2);
+  min-width: 60px;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.barTrack {
+  flex: 1;
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+  border: none;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--card-accent, var(--mint));
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1.6rem 1.4rem;
+  }
+}

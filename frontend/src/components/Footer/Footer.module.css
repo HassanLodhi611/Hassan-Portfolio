@@ -1,0 +1,78 @@
+.footer {
+  background: var(--bg3);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.inner { max-width: 1100px; margin: 0 auto; }
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.logoWrap { display: flex; align-items: center; gap: 10px; }
+.logoMark {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--bg2); border: 1px solid var(--mint);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.9rem; font-weight: 700;
+  color: var(--mint); letter-spacing: 0.1em;
+  box-shadow: var(--mint-glow);
+}
+.logoName  { font-family: var(--mono); font-weight: 700; font-size: 1rem; }
+.tagline   { font-family: var(--mono); font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+
+.socials { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+
+.socialLink {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); font-size: 1rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.socialLink:hover {
+  border-color: var(--mint); color: var(--mint); transform: translateY(-2px);
+}
+
+.adminLink {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 0.72rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text3); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 14px; transition: all 0.2s;
+}
+.adminLink:hover {
+  border-color: var(--red); color: var(--red); background: var(--red-dim);
+}
+.adminDot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text3); transition: background 0.2s;
+  flex-shrink: 0;
+}
+.adminLink:hover .adminDot { background: var(--red); }
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.copy  { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); }
+.made  { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); }
+.heart { color: var(--mint); }
+
+@media (max-width: 900px) {
+  .top { flex-direction: column; align-items: flex-start; }
+}

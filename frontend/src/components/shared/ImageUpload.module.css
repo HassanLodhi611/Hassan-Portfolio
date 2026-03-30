@@ -1,0 +1,63 @@
+.wrap { width: 100%; }
+
+.zone {
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.zone:hover, .dragging {
+  border-color: var(--mint);
+  background: var(--mint-dim);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.icon  { font-size: 1.8rem; }
+.label { font-family: var(--mono); font-size: 0.72rem; color: var(--text2); }
+.sub   { font-family: var(--mono); font-size: 0.62rem; color: var(--text3); }
+
+.previewWrap {
+  position: relative;
+}
+.preview {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+}
+.remove {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 24px; height: 24px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--border2);
+  color: var(--red);
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.remove:hover { background: var(--red-dim); }
+.fileName {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  margin-top: 5px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

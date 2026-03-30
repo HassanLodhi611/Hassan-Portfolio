@@ -1,0 +1,82 @@
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.statCard::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--s-accent, var(--mint));
+  opacity: 0.5;
+}
+.clickable { cursor: pointer; }
+.clickable:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.statLabel {
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--text3);
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.statNum {
+  font-size: 1.9rem; font-weight: 700;
+  font-family: var(--mono); line-height: 1;
+  color: var(--s-accent, var(--mint));
+}
+.statChange {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--text3); margin-top: 4px;
+}
+.up { color: var(--mint); }
+
+.secHeader {
+  display: flex; align-items: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.secTitle {
+  font-size: 1rem; font-weight: 700; font-family: var(--mono);
+}
+
+.log {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.logHeader {
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.logItem {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.85rem;
+}
+.logItem:last-child { border-bottom: none; }
+
+.actType {
+  font-family: var(--mono); font-size: 0.65rem;
+  padding: 2px 8px; border-radius: 4px; flex-shrink: 0;
+}
+.add  { background: var(--mint-dim);  color: var(--mint);   border: 1px solid rgba(0,255,198,0.18); }
+.edit { background: var(--gold-dim);  color: var(--gold);   border: 1px solid rgba(255,214,10,0.15); }
+.del  { background: var(--red-dim);   color: var(--red);    border: 1px solid rgba(255,77,109,0.18); }
+
+.actName { flex: 1; color: var(--text); }
+.actTime { font-family: var(--mono); font-size: 0.65rem; color: var(--text3); flex-shrink: 0; }
