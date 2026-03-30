@@ -19,8 +19,23 @@ const app = express();
 
 // ─── Security middleware ──────────────────────────
 app.use(helmet());
+// app.use(cors({
+//   origin: process.env.CLIENT_URL || 'http://localhost:5173',
+//   credentials: true,
+// }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  (process.env.CLIENT_URL || "").trim()
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
   credentials: true,
 }));
 
