@@ -9,6 +9,7 @@ import ProjectsPanel from '../components/admin/panels/ProjectsPanel';
 import CertificatesPanel from '../components/admin/panels/CertificatesPanel';
 import SkillsPanel from '../components/admin/panels/SkillsPanel';
 import AboutPanel from '../components/admin/panels/AboutPanel';
+import AccountPanel from '../components/admin/panels/AccountPanel';
 import styles from './AdminPage.module.css';
 
 export const PANELS = {
@@ -17,6 +18,7 @@ export const PANELS = {
   certs:     { label: 'certificates.db', path: 'certs' },
   skills:    { label: 'skills.json',   path: 'skills' },
   about:     { label: 'about.json',    path: 'about' },
+  account:   { label: 'Account Settings', path: 'account' },
 };
 
 export default function AdminPage() {
@@ -38,6 +40,7 @@ export default function AdminPage() {
       case 'certs':     return <CertificatesPanel />;
       case 'skills':    return <SkillsPanel />;
       case 'about':     return <AboutPanel />;
+      case 'account':   return <AccountPanel />;
       default:          return <OverviewPanel onNavigate={setActivePanel} />;
     }
   };

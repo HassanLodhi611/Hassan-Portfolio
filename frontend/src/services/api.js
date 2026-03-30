@@ -29,6 +29,7 @@ API.interceptors.response.use(
 // ─── Auth ──────────────────────────────────────────
 export const login = (creds)      => API.post('/auth/login', creds);
 export const verifyToken = ()     => API.get('/auth/verify');
+export const changeCredentials = (data) => API.put('/auth/change-credentials', data);
 
 // ─── Projects ──────────────────────────────────────
 export const getProjects    = (params) => API.get('/projects', { params });
