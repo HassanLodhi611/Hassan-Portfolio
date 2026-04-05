@@ -1,28 +1,13 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionUrl: `smtps://${process.env.EMAIL_USER}:${process.env.EMAIL_PASS}@smtp.gmail.com`,
-  connectionTimeout: 10000,
-  socketTimeout: 10000,
-  pool: {
-    maxConnections: 1,
-    maxMessages: 5,
-    rateDelta: 2000,
-    rateLimit: 5,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY || 're_MRFyQmSx_FHdCu5FLbuWT5Fhztw2e8NUh');
 
 // Non-blocking email sending (fire-and-forget)
 const sendContactEmail = async (name, email, subject, message) => {
-  // Send both emails asynchronously without waiting
-  Promise.all([
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
+  try {
+    // Send to yourself
+    await resend.emails.send({
+      from: 'Hassan Lodhi <onboarding@resend.dev>',
       to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission from ${name}: ${subject || 'No Subject'}`,
       html: `
@@ -41,10 +26,11 @@ const sendContactEmail = async (name, email, subject, message) => {
           </p>
         </div>
       `,
-      timeout: 10000,
-    }),
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    });
+
+    // Send confirmation to user
+    await resend.emails.send({
+      from: 'Hassan Lodhi <onboarding@resend.dev>',
       to: email,
       subject: 'Message Received - Hassan Lodhi',
       html: `
@@ -63,14 +49,10 @@ const sendContactEmail = async (name, email, subject, message) => {
           </p>
         </div>
       `,
-      timeout: 10000,
-    }),
-  ]).catch((err) => {
-    console.error('Background email sending failed:', err.message);
-    // Silently fail - message was already saved to DB
-  });
-
-  // Return immediately - don't wait for emails
+    });
+  } catch (err) {
+    console.error('Resend email error:', err);
+  }
   return true;
 };
 
