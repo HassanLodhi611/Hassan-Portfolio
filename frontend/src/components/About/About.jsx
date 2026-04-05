@@ -17,12 +17,15 @@ export default function About() {
         <div className="section-tag">About Me</div>
         <div className={styles.grid}>
           {/* Photo */}
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <div className={`${styles.photoWrap} reveal`}>
               <div className={styles.photoInner}>
-                <span className={styles.photoEmoji}>👨‍💻</span>
+                <img
+                  src={require('./My Pic.jpeg')}
+                  alt="Hassan Lodhi"
+                  className={styles.photoImg}
+                />
               </div>
-              <div className={styles.photoBorder} />
             </div>
           </div>
 
