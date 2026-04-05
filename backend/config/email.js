@@ -1,6 +1,6 @@
 const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_MRFyQmSx_FHdCu5FLbuWT5Fhztw2e8NUh');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Non-blocking email sending (fire-and-forget)
 const sendContactEmail = async (name, email, subject, message) => {
