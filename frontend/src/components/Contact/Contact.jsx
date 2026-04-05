@@ -21,13 +21,22 @@ export default function Contact() {
     e.preventDefault();
     setSub(true);
     try {
+      // const formData = new FormData();
+      // formData.append('access_key', 'cad7263e-1709-467a-9118-ac86fc18e355');
+      // formData.append('subject', form.subject || 'Contact Form Submission');
+      // formData.append('from_name', form.name);
+      // formData.append('email', form.email);
+      // formData.append('message', form.message);
+      // formData.append('to', 'hassanlodhi261@gmail.com');
+
       const formData = new FormData();
-      formData.append('access_key', 'cad7263e-1709-467a-9118-ac86fc18e355');
-      formData.append('subject', form.subject || 'Contact Form Submission');
-      formData.append('from_name', form.name);
-      formData.append('email', form.email);
-      formData.append('message', form.message);
-      formData.append('to', 'hassanlodhi261@gmail.com');
+formData.append('access_key', 'cad7263e-1709-467a-9118-ac86fc18e355');
+formData.append('subject', form.subject || 'Contact Form Submission');
+formData.append('from_name', form.name);
+formData.append('email', form.email);
+formData.append('message', form.message);
+
+
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
