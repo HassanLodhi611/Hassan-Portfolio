@@ -21,7 +21,7 @@ export default function About() {
             <div className={`${styles.photoWrap} reveal`}>
               <div className={styles.photoInner}>
                 <img
-                  src={require('./My Pic.jpeg')}
+                  src="/My Pic.jpeg"
                   alt="Hassan Lodhi"
                   className={styles.photoImg}
                 />
