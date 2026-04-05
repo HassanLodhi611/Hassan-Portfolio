@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import useReveal from '../../hooks/useReveal';
-import { sendMessage } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import styles from './Contact.module.css';
 
@@ -22,9 +21,25 @@ export default function Contact() {
     e.preventDefault();
     setSub(true);
     try {
-      await sendMessage(form);
-      showToast("Message sent! I'll respond within 24h.", 'success');
-      setForm({ name: '', email: '', subject: '', message: '' });
+      const formData = new FormData();
+      formData.append('access_key', 'cad7263e-1709-467a-9118-ac86fc18e355');
+      formData.append('subject', form.subject || 'Contact Form Submission');
+      formData.append('from_name', form.name);
+      formData.append('email', form.email);
+      formData.append('message', form.message);
+      formData.append('to', 'hassanlodhi261@gmail.com');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json();
+      if (result.success) {
+        showToast("Message sent! I'll respond within 24h.", 'success');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        showToast('Failed to send. Please email directly.', 'error');
+      }
     } catch {
       showToast('Failed to send. Please email directly.', 'error');
     } finally {
