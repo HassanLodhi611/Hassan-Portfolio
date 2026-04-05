@@ -8,7 +8,7 @@ const sendContactEmail = async (name, email, subject, message) => {
     // Send to yourself
     await resend.emails.send({
       from: 'Hassan Lodhi <onboarding@resend.dev>',
-      to: process.env.EMAIL_USER,
+       to: "hassanlodhi261@gmail.com",
       subject: `New Contact Form Submission from ${name}: ${subject || 'No Subject'}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
