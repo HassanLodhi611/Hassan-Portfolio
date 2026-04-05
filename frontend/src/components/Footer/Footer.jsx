@@ -39,9 +39,7 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <div className={styles.copy}>© {new Date().getFullYear()} Hassan Lodhi. All rights reserved.</div>
-          <div className={styles.made}>
-            Built with <span className={styles.heart}>♥</span> using MERN Stack
-          </div>
+          
         </div>
       </div>
     </footer>
