@@ -38,11 +38,34 @@ app.use(helmet());
 //   },
 //   credentials: true,
 // }));
-// Configure CORS to allow the frontend origin (set CLIENT_URL in environment on Render/Netlify)
-const allowedOrigin = (process.env.CLIENT_URL || '*').trim();
-app.use(cors({ origin: allowedOrigin === '' ? '*' : allowedOrigin, credentials: true }));
-// Ensure preflight requests are handled for all routes
-app.options('*', cors({ origin: allowedOrigin === '' ? '*' : allowedOrigin, credentials: true }));
+// Configure CORS: support an allowlist and normalize origins (remove trailing slash)
+// Set `CLIENT_URL` to a single origin or `ALLOWED_ORIGINS` to a comma-separated list.
+const rawAllowed = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || '').trim();
+const parseList = (s) => s.split(',').map((x) => x.trim()).filter(Boolean);
+const normalize = (u) => (u || '').replace(/\/+$/, '');
+const allowlist = new Set(parseList(rawAllowed).map(normalize));
+// Always allow localhost dev origins for convenience
+allowlist.add(normalize('http://localhost:5173'));
+allowlist.add(normalize('http://127.0.0.1:5173'));
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // allow non-browser requests (curl, server-to-server) without Origin
+    if (!origin) return callback(null, true);
+    const norm = normalize(origin);
+    if (allowlist.size === 0) {
+      // no allowlist provided — allow all origins
+      return callback(null, true);
+    }
+    if (allowlist.has(norm)) return callback(null, true);
+    console.warn('CORS: blocked origin', origin);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 // ─── Rate limiting ────────────────────────────────
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
