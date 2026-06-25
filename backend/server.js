@@ -64,6 +64,8 @@ const corsOptions = {
   credentials: true,
 };
 
+console.log('CORS allowlist:', Array.from(allowlist));
+
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 // ─── Rate limiting ────────────────────────────────
@@ -104,6 +106,16 @@ app.get('/api/cloudinary/health', async (req, res) => {
     console.error('Cloudinary health check failed:', err);
     res.status(502).json({ success: false, message: 'Cloudinary health check failed', error: err.message || err.toString() });
   }
+});
+
+app.get('/api/debug/origin', (req, res) => {
+  const origin = req.headers.origin || null;
+  res.json({
+    success: true,
+    origin,
+    normalizedOrigin: origin ? normalize(origin) : null,
+    allowlist: Array.from(allowlist),
+  });
 });
 
 // ─── 404 handler ──────────────────────────────────

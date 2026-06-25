@@ -1,9 +1,21 @@
 import axios from 'axios';
 
+const rawBaseUrl = import.meta.env.VITE_API_URL?.trim();
+const defaultApiHost = import.meta.env.MODE === 'development'
+  ? 'http://localhost:5000'
+  : 'https://hassan-portfolio-858j.onrender.com';
+const apiBaseUrl = rawBaseUrl && rawBaseUrl !== 'undefined' && rawBaseUrl !== 'null'
+  ? rawBaseUrl.replace(/\/+$/, '')
+  : defaultApiHost;
+
 const API = axios.create({
-  // baseURL: import.meta.env.VITE_API_URL || '/api',
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: `${apiBaseUrl}/api`,
+  timeout: 12000,
 });
+
+if (!rawBaseUrl) {
+  console.warn(`VITE_API_URL is not configured. Falling back to ${apiBaseUrl}. Set VITE_API_URL for a custom backend.`);
+}
 
 // Attach JWT token to every request if present
 API.interceptors.request.use((config) => {
