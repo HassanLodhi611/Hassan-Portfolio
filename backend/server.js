@@ -38,7 +38,11 @@ app.use(helmet());
 //   },
 //   credentials: true,
 // }));
-app.use(cors());
+// Configure CORS to allow the frontend origin (set CLIENT_URL in environment on Render/Netlify)
+const allowedOrigin = (process.env.CLIENT_URL || '*').trim();
+app.use(cors({ origin: allowedOrigin === '' ? '*' : allowedOrigin, credentials: true }));
+// Ensure preflight requests are handled for all routes
+app.options('*', cors({ origin: allowedOrigin === '' ? '*' : allowedOrigin, credentials: true }));
 // ─── Rate limiting ────────────────────────────────
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
