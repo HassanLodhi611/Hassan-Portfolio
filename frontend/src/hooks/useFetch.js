@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useLoading } from '../context/LoadingContext';
 
 /**
  * Generic fetch hook.
@@ -9,16 +10,23 @@ export default function useFetch(fetchFn, deps = []) {
   const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
+  const requestCount = useRef(0);
+  const { registerRequest } = useLoading();
 
   const execute = useCallback(async () => {
+    requestCount.current += 1;
+    registerRequest(true);
     setLoading(true);
     setError(null);
+
     try {
       const res = await fetchFn();
       setData(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Something went wrong');
     } finally {
+      requestCount.current = Math.max(0, requestCount.current - 1);
+      registerRequest(false);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

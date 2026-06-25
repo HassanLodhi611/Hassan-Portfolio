@@ -1,0 +1,176 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 20%, rgba(0,255,198,0.08), transparent 28%),
+              radial-gradient(circle at 20% 80%, rgba(0,255,198,0.04), transparent 18%),
+              #0d0d0d;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.loader.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 198, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 198, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(0,255,198,0.15) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 140px 140px, 90px 90px;
+  opacity: 0.55;
+  animation: drift 24s linear infinite;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(0,255,198,0.12), transparent 25%),
+              radial-gradient(circle at 85% 20%, rgba(0,255,198,0.06), transparent 18%);
+  filter: blur(18px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.panel {
+  position: relative;
+  z-index: 1;
+  width: min(98vw, 700px);
+  max-width: 700px;
+  margin: 0 1.5rem;
+  padding: 2rem;
+  border: 1px solid rgba(0, 255, 198, 0.16);
+  border-radius: 28px;
+  background: rgba(10, 10, 10, 0.88);
+  box-shadow: 0 25px 90px rgba(0, 255, 198, 0.09);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  font-family: var(--mono);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--mint);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.terminal {
+  border: 1px solid rgba(0, 255, 198, 0.15);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(7, 12, 16, 0.95);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 255, 198, 0.06);
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: rgba(0, 255, 198, 0.8);
+  box-shadow: 0 0 12px rgba(0, 255, 198, 0.4);
+}
+
+.title {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--text2);
+}
+
+.body {
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+.line {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.prompt {
+  color: var(--mint);
+  min-width: 1.1rem;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.7rem;
+  height: 1.05rem;
+  margin-left: 0.1rem;
+  background: var(--mint);
+  animation: blink 1s step-start infinite;
+}
+
+.final {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 0.6rem;
+  text-align: center;
+}
+
+.finalLine {
+  font-family: var(--mono);
+  font-size: 0.98rem;
+  color: #dffcf2;
+  letter-spacing: 0.06em;
+}
+
+@keyframes blink {
+  0%, 40% { opacity: 1; }
+  41%, 100% { opacity: 0; }
+}
+
+@keyframes drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: -320px 240px, 240px -320px; }
+}
+
+@media (max-width: 680px) {
+  .panel {
+    padding: 1.5rem;
+    border-radius: 22px;
+  }
+
+  .brand {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .body {
+    padding: 1.25rem 1.2rem 1.25rem;
+  }
+}
