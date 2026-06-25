@@ -28,6 +28,8 @@ export default function AppLoader() {
   const [currentText, setCurrentText] = useState('');
   const [done, setDone] = useState(false);
   const [fastMode, setFastMode] = useState(false);
+  const hideTimeout = React.useRef(null);
+  const maxTimeout = React.useRef(null);
 
   const allLines = useMemo(() => ['Initializing...', ...SEQUENCE], []);
 
@@ -39,6 +41,20 @@ export default function AppLoader() {
       setCurrentText('');
       setDone(false);
       setFastMode(false);
+
+      if (hideTimeout.current) {
+        clearTimeout(hideTimeout.current);
+        hideTimeout.current = null;
+      }
+      if (maxTimeout.current) {
+        clearTimeout(maxTimeout.current);
+        maxTimeout.current = null;
+      }
+
+      maxTimeout.current = setTimeout(() => {
+        setVisible(false);
+      }, 15000);
+
       return;
     }
 
@@ -77,16 +93,22 @@ export default function AppLoader() {
   useEffect(() => {
     if (!visible) return undefined;
 
-    if (!loading && done) {
-      const hideId = setTimeout(() => setVisible(false), 540);
-      return () => clearTimeout(hideId);
+    if (hideTimeout.current) {
+      clearTimeout(hideTimeout.current);
+      hideTimeout.current = null;
+    }
+
+    if (done) {
+      hideTimeout.current = setTimeout(() => setVisible(false), 540);
+      return () => clearTimeout(hideTimeout.current);
     }
 
     return undefined;
-  }, [done, loading, visible]);
+  }, [done, visible]);
 
   useEffect(() => {
     if (!visible) return undefined;
+
     if (!done && !loading) {
       setFastMode(true);
     }
@@ -97,6 +119,13 @@ export default function AppLoader() {
 
     return undefined;
   }, [done, loading, visible]);
+
+  useEffect(() => {
+    return () => {
+      if (hideTimeout.current) clearTimeout(hideTimeout.current);
+      if (maxTimeout.current) clearTimeout(maxTimeout.current);
+    };
+  }, []);
 
   if (!visible) return null;
 
